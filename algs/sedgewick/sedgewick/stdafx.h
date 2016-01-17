@@ -26,12 +26,23 @@
 #include <afxcmn.h>                     // MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include <iostream>
-
-
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // some CString constructors will be explicit
 
 #include <atlbase.h>
 #include <atlstr.h>
 
 // TODO: reference additional headers your program requires here
+
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype>
+#include <sstream>
+#include <vector>
+#include <stdlib.h>
+#include <fstream>
+#include <ios>
+#include <exception>
+#include <ctime>
+#include <chrono>
+using namespace std;

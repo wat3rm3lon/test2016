@@ -3,19 +3,14 @@
 
 #include "stdafx.h"
 #include "sedgewick.h"
-#include <iostream>
-#include <stack>
-#include <string>
-#include <cctype>
-#include <sstream>
-#include <vector>
 
+#include "functions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-using namespace std;
+
 
 template <class T>
 struct node{
@@ -148,7 +143,8 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 		}
 		else
 		{
-			start();
+			listing141();
+			//start();
 			_exit(0);
 
 		}
@@ -163,7 +159,31 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	return nRetCode;
 }
 int start(){
-    using namespace std;
+	using namespace std;
+try{
+	stringstream ss22;
+	ofstream out;
+	out.open("I:\\test\\1m-ints.txt");
+	if(!out.is_open()){
+		cout << "open failed" << endl;
+		return 1;
+	}
+	srand (time(NULL));
+	for(int i = 0; i < 1000000; i++){
+		int number = rand();
+		ss22 << number << " ";
+	}
+	out << ss22.str().c_str() << endl;
+	//out << "AAAAAAAAAAAAAAAAAAA" << endl;
+	//cout << ss22.str() << endl;
+	//out.write(ss22.str().c_str(), ss22.);
+	out.close();
+	}catch(std::exception& exc){
+		cout << exc.what() << endl;
+		return 1;
+	}
+	_exit(0);
+
     string s1 = "to be or not to - be - - that - - - is ";
     queue<string> que;
     stringstream ss(s1);
