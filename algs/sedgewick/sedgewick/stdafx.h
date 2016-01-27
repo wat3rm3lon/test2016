@@ -47,3 +47,6 @@
 #include <chrono>
 #include <algorithm>
 using namespace std;
+
+#include "functions.h"
+#include "sorting.h"

@@ -1,20 +1,47 @@
 #include "stdafx.h"
 #include "functions.h"
 
+bool read_file(std::vector<int>& vec, std::string file_path){
+    ifstream in;
+    in.open(file_path, ios::ate);
+    if(!in.is_open()){
+        cout << "open failed " << endl;
+        return FALSE;
+    }
+    long long size = in.tellg();
+    if(size < 10){
+        cout << "empty or corrupted file. size = " << size << endl;
+        in.close();
+        return FALSE;
+    }
+    in.seekg(0, ios::beg);
 
+    string tmp;
+    char delim = ' ';
+    int counter = 0;
+    while(getline(in, tmp, delim)){
+        vec.push_back(atoi(tmp.c_str()));
+        counter++;
+    }
+    in.close();
+    return TRUE;
+}
 int start(){
     using namespace std;
     try{
         stringstream ss22;
         ofstream out;
-        out.open("I:\\test\\1m-ints.txt");
+        //out.open("I:\\test\\1m-ints.txt");
+        out.open("..\\..\\..\\100-bytes.txt");
         if(!out.is_open()){
             cout << "open failed" << endl;
             return 1;
         }
         srand (static_cast<UINT>(time(NULL)));
-        for(int i = 0; i < 1000000; i++){
-            int number = rand();
+        //for(int i = 0; i < 1000000; i++){
+        for(int i = 0; i < 101; i++){
+            //int number = rand();
+            int number = rand() % 256;
             ss22 << number << " ";
         }
         out << ss22.str().c_str() << endl;
@@ -283,5 +310,26 @@ void listing144(){
     in.close();
     int count = sf.count(vints);
     cout << "3 count with 0 sum = " << count << endl;
+    cin.get();
+}
+void listing151(){
+    //std::string path("..\\..\\..\\files\\mediumUF.txt");
+    std::string path("..\\..\\..\\files\\tinyUF.txt");
+    std::vector<int> vints;
+    if(!read_file(vints, path)){
+        return;
+    }
+    int n = vints.size();
+    uf uf2(n);
+    for(UINT i = 0; i < vints.size() - 1; i += 2){
+        int p = vints[i];
+        int q = vints[++i];
+        if(uf2.connected(p, q)){
+            continue;
+        }
+        uf2.union_(p, q);
+        cout << p << " " << q << endl;
+    }
+    cout << uf2.count_() << " components count" << endl;
     cin.get();
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 
 template <class T>
 struct node{
@@ -171,8 +173,46 @@ public:
         return count;
     }
 };
+
+class uf{
+    std::vector<int> id;
+    //int* pID;
+    int count;
+public:
+    uf(int n){
+        count = n;
+        id.reserve(n);
+        //pID = new int[n];
+        for(int i = 0; i < n; i++){
+            id.push_back(i);
+        }
+    }
+    int count_(){
+        return count;
+    }
+    int find(int p){
+        return id[p];
+    }
+    void union_(int p, int q){
+        int pid = find(p);
+        int qid = find(q);
+        if(pid == qid) return;
+
+        for(UINT i = 0; i < id.size(); i++){
+            if(id[i] == pid){
+                id[i] = qid;
+            }
+            count--;
+        }
+    }
+    bool connected(int p, int q){
+        return find(p) == find(q); 
+    }
+};
+bool read_file(std::vector<int>& vec, std::string file_path);
 int start();
 void listing114(); //page 60
 void listing141();
 void listing143(); //page 182
 void listing144();
+void listing151();
