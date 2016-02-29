@@ -249,6 +249,42 @@ public:
         }
     }
 };
+
+
+//344
+template <class Key, class Value>
+class SequentialSearchST{
+    class node2{
+        Key key;
+        Value val;
+        node2* next;
+    public:
+        node2(Key key, Value val, node2& next){
+            this->key = key;
+            this->val = val;
+            this->next = next;
+        }
+    };
+    node2* first;
+public:
+    Value get(Key key){
+        for(node2* x = first; x != NULL; x = x->next){
+            if(key == x->key){
+                return x->val;
+            }
+            return NULL;
+        }
+    }
+    void put(Key key, Value val){
+        for(node2* x = first; x != NULL; x = x->next){
+            if(key == x->key){
+                x.val = val;
+                return;
+            }
+        }
+        first = new node2(key, val, first);
+    }
+};
 void listing214(){
     std::vector<int> vints;
     std::string file_path("..\\..\\..\\files\\100-bytes.txt");
