@@ -285,3 +285,53 @@ void listing231(){
     qs.show(vints);
     cin.get();
 }
+
+
+template <typename T>
+void shift_down( T& a, int i, int j)
+{
+    bool done = false;
+    int maxChild;
+
+    while ((i * 2 + 1 < j) && (!done))
+    {
+        if (i * 2 + 1 == j - 1)
+            maxChild = i * 2 + 1;
+        else if( a[i * 2 + 1] > a[i * 2 + 2])
+            maxChild = i * 2 + 1;
+        else
+            maxChild = i * 2 + 2;
+
+        if( a[i] < a[maxChild])
+        {
+            std::swap( a[i], a[maxChild]);
+            i = maxChild;
+        }
+        else
+            done = true;
+    }
+}
+
+template <typename T>
+void heapsort( T& a)
+{
+    int i;
+    typename T::size_type size = a.size();
+
+    for (i = size / 2 - 1; i >= 0; i--)
+        shift_down(a, i, size);
+
+    for (i = size - 1; i >= 1; i--)
+    {
+        std::swap( a[0], a[i]);
+        shift_down( a, 0, i);
+    }
+}
+
+void list999(){
+    std::vector<int> vints;
+    std::string file_path("..\\..\\..\\files\\100-bytes.txt");
+    read_file(vints, file_path);
+    //MaxPQ pq;
+    //pq.insert()
+}
