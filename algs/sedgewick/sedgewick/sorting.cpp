@@ -475,7 +475,7 @@ class BST{
     Value get(Key key){
         return get(root, key);
     }
-    //---------------
+    
     void put(Key key, Value val){
         root = put(root, key, val);
     }
@@ -494,8 +494,143 @@ class BST{
         x->n = size(x->left) + size(x->right) + 1;
         return x;
     }
-};
+    //******************************************
+    Key min2(){
+        return min2(root).key;
+    }
+    node3 min2(node3& x){
+        if(x.left == nullptr) return x;
+        return min2(x.left);
+    }
+    Key floor2(Key key){
+        node3 x == floor2(root, key);
+        if(x == nullptr) return nullptr;
+        return x.key;
+    }
+    node3& floor2(node3& xtime, Key key){
 
+    }
+    void deleteMin(){
+        root = deleteMin(root);
+    }
+    node3& deleteMin(node3& x){
+        if(x.left == nullptr) return x.right;
+        x.left = deleteMin(x.left);
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+    
+    void delete2(Key key){
+        root = delete2(root, key);
+    }
+    node3& delete2(node3& x, Key key){
+        if(x == nullptr) return nullptr;
+        int cmp = 0;
+        
+        if(key < x.key) cmp = -1;
+        else if(key > x) cmp = 1;
+        else cmp = 0;
+
+        if(cmp < 0) x.left = delete2(x.left, key);
+        else if(cmp > 0) x.right = delete2(x.right, key);
+        else{
+            if(x.right == nullptr) return x.left;
+            if(x.left == nullptr) return x.right;
+            node3 t = x;
+            x = min2(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+
+};
+//page 393
+#define RED TRUE
+#define BLACK FALSE
+template<class Key, class Value>
+class RedBlack{
+    class rbNode{
+        Key key;
+        Value val;
+        rbNode* left;
+        rbNode* right;
+        int n;
+        bool color;
+    public:
+        rbNode(Key key, Value val, int n, bool color){
+            this->key = key;
+            this->val = val;
+            this->n = n;
+            this->color = color;
+        }
+    };
+
+    rbNode* root;
+
+public:
+    bool isRed(rbNode* x){
+        if(x == nullptr) return false;
+        return x->color == RED;
+    }
+
+    int size(rbNode* x){
+        if(x == nullptr) return 0;
+        else return x->n;
+    }
+    rbNode* rotateLeft(rbNode* h){
+        rbNode* x = h->right;
+        h->right = x->left;
+        x->left = h;
+        x->color = h->color;
+        h->color = RED;
+        x->n = h->n;
+        h->n = 1 + size(h->left) + size(h->right);
+        return x;
+    }
+    rbNode* rotateRight(rbNode* h){
+        rbNode* x = h->left;
+        h->left = x->right;
+        x->right = h;
+        x->color = h->color;
+        h->color = RED;
+        x->n = h->n;
+        h->n = 1 + size(h->left) + size(h->right);
+        return x;
+    }
+    void flipColors(rbNode* h){
+        h->color = RED;
+        h->left.color = BLACK;
+        h->right.color = BLACK;
+    }
+    void put(Key key, Value val){
+        root = put(root, key, val);
+        root->color = BLACK;
+    }
+    rbNode* put(rbNode* h, Key key, Value val){
+        if(h == nullptr) return new rbNode(key, val, 1, RED);
+
+        int cmp = 0;
+        if(key > h->key) cmp = 1;
+        else if(key < h->key) cmp = -1;
+        else cmp = 0;
+
+        if(cmp < 0) h->left = put(h->left, key, val);
+        else if(cmp > 0) h->right = put(h->right, key, val);
+        else h->val = val;
+
+        if(isRed(h->right) && !isRed(h->left)) h = rotateLeft(h);
+
+        if(isRed(h->left) && isRed(h->left.left)) h = rotateRight(h);
+
+        if(isRed(h->left) && isRed(h->right)) flipColors(h);
+
+        h->n = size(h->left) + size(h->right) + 1;
+    }
+};
+    
 void list999(){
     std::vector<int> vints;
     std::string file_path("..\\..\\..\\files\\100-bytes.txt");
