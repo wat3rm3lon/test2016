@@ -50,3 +50,4 @@ using namespace std;
 
 #include "functions.h"
 #include "sorting.h"
+#include "hash.h"
